@@ -18,8 +18,8 @@ def main():
     page_limit = Selenium.determine_page_limit(driver)
     player_list = PlayerList.fetch_player_list()
     filtered_Listing_list = []
-    #for page in range(1, 2):
-    for page in range(1,page_limit+1):
+    for page in range(1, 2):
+    #for page in range(1,page_limit+1):
         print("Processing page " + str(page) + " of " + str(page_limit))
         #Open auction page
         driver = Selenium.update_auction_page(driver, page, schedule_id)
@@ -42,10 +42,9 @@ def main():
         time.sleep(pause_interval)
         print("Finished processing page " + str(page))
 
-    for listing in filtered_Listing_list:
-        print(listing.__dict__)
-
     print("Final filtered listing size is " + str(len(filtered_Listing_list)))
+
+    ListingSorter.summarise_Listing_list(filtered_Listing_list)
     
     Selenium.kill_driver(driver)
 

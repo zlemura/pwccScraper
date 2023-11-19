@@ -42,3 +42,18 @@ def determine_if_listing_contains_player_name(Listing, player_list):
     print(match_method)
     return match_method, matched_Player
 
+def summarise_Listing_list(filtered_Listing_list):
+    summarised_listing_list = {}
+
+    for listing in filtered_Listing_list:
+        if listing.matched_Player in summarised_listing_list:
+            current_value = summarised_listing_list.get(listing.matched_Player)
+            new_dictionary_value = {listing.matched_Player : current_value + 1}
+            summarised_listing_list.update(new_dictionary_value)
+        else:
+            new_dictionary_value = {listing.matched_Player: 1}
+            summarised_listing_list.update(new_dictionary_value)
+
+    for matched_Player, count in summarised_listing_list.items():
+        print(matched_Player.__dict__)
+        print(str(count))
