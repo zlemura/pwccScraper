@@ -2,6 +2,7 @@
 # Summarise results by matched_Player.
 # Output list results to spreadsheet.
 
+import ExcelFileCreator
 import Listing
 import ListingSorter
 import PlayerList
@@ -44,8 +45,14 @@ def main():
 
     print("Final filtered listing size is " + str(len(filtered_Listing_list)))
 
-    ListingSorter.summarise_Listing_list(filtered_Listing_list)
-    
+    #Summarise listings.
+    summarised_Listing_list = ListingSorter.summarise_Listing_list(filtered_Listing_list)
+
+    #Create excel file.
+    excel_workbook, excel_worksheet = ExcelFileCreator.create_excel_file(schedule_id)
+    excel_workbook, excel_worksheet = ExcelFileCreator.add_column_headers(excel_workbook, excel_worksheet)
+
+
     Selenium.kill_driver(driver)
 
 if __name__ == '__main__':
