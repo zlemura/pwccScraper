@@ -1,7 +1,3 @@
-#TODO
-# Summarise results by matched_Player.
-# Output list results to spreadsheet.
-
 import ExcelFileCreator
 import Listing
 import ListingSorter
@@ -19,8 +15,9 @@ def main():
     page_limit = Selenium.determine_page_limit(driver)
     player_list = PlayerList.fetch_player_list()
     filtered_Listing_list = []
-    for page in range(1, 2):
-    #for page in range(1,page_limit+1):
+    debug_pages_to_scan = 5
+    for page in range(1, debug_pages_to_scan + 1):
+    #for page in range(1, page_limit+1):
         print("Processing page " + str(page) + " of " + str(page_limit))
         #Open auction page
         driver = Selenium.update_auction_page(driver, page, schedule_id)
@@ -39,9 +36,9 @@ def main():
                 print(listing.title)
                 print("Added listing to filtered list!")
         pause_interval = random.randint(2,5)
-        print("Sleeping for " + str(pause_interval))
+        print("Sleeping for " + str(pause_interval) + " seconds.")
         time.sleep(pause_interval)
-        print("Finished processing page " + str(page))
+        print("Finished processing page " + str(page) + " of " + str(page_limit))
 
     print("Final filtered listing size is " + str(len(filtered_Listing_list)))
 
@@ -49,9 +46,11 @@ def main():
     summarised_Listing_list = ListingSorter.summarise_Listing_list(filtered_Listing_list)
 
     #Create excel file.
-    excel_workbook, excel_worksheet = ExcelFileCreator.create_excel_file(schedule_id)
-    excel_workbook, excel_worksheet = ExcelFileCreator.add_column_headers(excel_workbook, excel_worksheet)
-
+    excel_workbook, excel_worksheet, excel_writer = ExcelFileCreator.create_excel_file(schedule_id)
+    excel_workbook, excel_worksheet, excel_writer = ExcelFileCreator.add_column_headers(excel_workbook, excel_worksheet, excel_writer)
+    excel_workbook, excel_worksheet, excel_writer = ExcelFileCreator.add_summarised_data_to_worksheet(excel_workbook, excel_worksheet, excel_writer,
+                                                                                        summarised_Listing_list, filtered_Listing_list)
+    ExcelFileCreator.close_workbook(excel_workbook)
 
     Selenium.kill_driver(driver)
 

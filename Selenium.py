@@ -9,20 +9,10 @@ from bs4 import BeautifulSoup
 import urllib.parse
 from Listing import Listing
 
-#TODO
-# Determine maximum page - class=goToPaginatorContainer flex-center w-100.
-# Fetch_gridItemList()
-# Convert_gridItemList_to_Listing_list()
-# Add results to list
-# Move to next page. Repeat to page limit.
-
 def open_auction_page(schedule_id):
     driver = webdriver.Edge('./msedgedriver.exe')
     driver.get("https://www.pwccmarketplace.com/weekly-auction?auction_schedule_id=" + str(schedule_id) + "&category=soccer&sort_by=year_first&page=1")
     return driver
-
-def fetch_all_listings():
-    print("Hi")
 
 
 def determine_page_limit(driver):

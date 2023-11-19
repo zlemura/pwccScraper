@@ -1,16 +1,16 @@
-#TODO
-# Create excel file output for summarised listings.
 import PlayerList
 from Player import Player
 from Listing import Listing
+
+#TODO
+# Improve matching logic to check if the whole name is being matched. e.g. Rodri matched to James Rodriguez.
+## Break entire title iinto terms. Match entire word.
 
 def determine_if_listing_contains_player_name(Listing, player_list):
     match_method = ''
     matched_Player = None
 
     for player in player_list:
-        print(Listing.title)
-        print(player.last_name, player.first_name, player.nick_name)
         if str(player.last_name).strip() in str(Listing.title):
             print('Matched player last name!')
             print(player.first_name)
@@ -29,7 +29,6 @@ def determine_if_listing_contains_player_name(Listing, player_list):
             matched_Player = player
             break
 
-    print(match_method)
     return match_method, matched_Player
 
 def summarise_Listing_list(filtered_Listing_list):
@@ -47,3 +46,5 @@ def summarise_Listing_list(filtered_Listing_list):
     for matched_Player, count in summarised_listing_list.items():
         print(matched_Player.__dict__)
         print(str(count))
+
+    return summarised_listing_list

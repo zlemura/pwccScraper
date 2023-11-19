@@ -7,7 +7,7 @@ def fetch_player_list():
     player_name_list_data = player_name_list_file.read()
     # Split into lines
     split_player_name_list_data = player_name_list_data.splitlines()
-    # print(split_player_name_list_data) ['Lionel,Messi,', 'Cristiano,Ronaldo,']
+
     # Loop through each line and create player_list
     player_list = []
     for player in split_player_name_list_data:
